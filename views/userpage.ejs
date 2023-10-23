@@ -1,0 +1,144 @@
+<!-- views/index.ejs -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Expense Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+
+    h1 {
+      background-color: #2c3e50;
+      color: #ecf0f1;
+      text-align: center;
+      padding: 10px;
+      margin: 0;
+    }
+
+    form {
+      margin: 20px;
+      padding: 10px;
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    table {
+      margin: 20px;
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      width: 100%;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #2c3e50;
+      color: #ecf0f1;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #d5dbdb;
+    }
+
+    select, button {
+      padding: 5px;
+      margin: 5px;
+    }
+
+    p {
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hello, <%= locals.username.firstname %></h1>
+
+  <!-- Add Expense Form -->
+  <form method="post" action="addExpense/<%= locals.username.id %>">
+    <input type="text" name="expenseName" placeholder="Expense Name" required>
+    <select name="category" required>
+      <option value="Food">Food</option>
+      <option value="Entertainment">Entertainment</option>
+      <option value="EMI">EMI</option>
+      <option value="Rent">Rent</option>
+      <option value="Other">Other</option>
+    </select>
+    <input type="number" name="amount" placeholder="Amount" required>
+    <button type="submit">Add Expense</button>
+  </form>
+<!-- 
+  Expense Table with Category Filter -->
+  <table>
+    <tr>
+      <th>S.No.</th>
+      <th>Expense Name</th>
+      <th>Category</th>
+      <th>Amount</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+
+<% amount=0 %>
+<% for (let i = 0; i < expenses.length; i++) { %>
+  <tr>
+    <td><%= i + 1 %></td>
+    <td><%= expenses[i].Expense_Name %></td>
+    <td><%= expenses[i].Category %></td>
+    <td><%= expenses[i].Amount %></td>
+    <td><a href="/edit/<%= i %>">Edit</a></td>
+    <td><a href="/delete/<%= i %>">Delete</a></td>
+  </tr>
+  <% amount = amount + expenses[i].Amount %>
+<% } %>
+  </table>
+
+  <!-- Category Filter -->
+  <form>
+    <label for="categoryFilter">Filter by Category:</label>
+    <select id="categoryFilter">
+      <option value="All">All</option>
+      <option value="Food">Food</option>
+      <option value="Entertainment">Entertainment</option>
+      <option value="EMI">EMI</option>
+      <option value="Rent">Rent</option>
+      <option value="Other">Other</option>
+    </select>
+    <button type="button" onclick="filterTable()">Filter</button>
+  </form>
+
+  <!-- Total Amount -->
+  <p>Total Amount: <%= amount %></p>
+
+  <script>
+    function filterTable() {
+      const selectedCategory = document.getElementById("categoryFilter").value;
+      // Implement JavaScript filtering logic and update the table based on the selected category
+    }
+
+    // function calculateTotalAmount(expenses) {
+    //   // Implement JavaScript logic to calculate the total amount
+    //   let amount=0
+    //   for (let i = 0; i < expenses.length; i++) { 
+    //    amount=amount+ expenses[i].amount
+    // } 
+    // return amount;
+    // }
+
+ 
+  </script>
+</body>
+</html>
