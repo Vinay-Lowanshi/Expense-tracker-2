@@ -1,5 +1,5 @@
 const path = require('path'); // Import the 'path' module to work with file paths
-const {user}=require('../../database/schema')
+const {userSchema}=require('../../database/schema')
 const bcrypt=require('bcrypt')
 const signup = (req, res) => {
     res.render('signup')
@@ -8,7 +8,7 @@ const signup = (req, res) => {
 const createuser=async(req,res)=>{
     const {firstname,lastname,email,mobile,password}=req.body;
     try{
-        const user1= await user.findOne({where:{
+        const user1= await userSchema.findOne({where:{
             email:email
         }})
         console.log(user1)
@@ -21,7 +21,7 @@ const createuser=async(req,res)=>{
         else{
             //         Hashing password using Bcrypt and storing it in database
             bcrypt.hash(password,10,async(err,hash)=>{
-                await user.create(
+                await userSchema.create(
                     {
                         // firstname:firstname,lastname:lastname,email:email,mobile:mobile,password:password}
                         firstname,lastname,email,mobile,password:hash}

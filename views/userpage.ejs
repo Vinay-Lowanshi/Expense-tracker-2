@@ -66,9 +66,12 @@
 </head>
 <body>
   <h1>Hello, <%= locals.username.firstname %></h1>
+  <form method="get" action="/">
+    <button type="submit">Logout</button>
+  </form>
 
   <!-- Add Expense Form -->
-  <form method="post" action="addExpense/<%= locals.username.id %>">
+  <form method="post" action="/addExpense/<%= locals.username.id %>">
     <input type="text" name="expenseName" placeholder="Expense Name" required>
     <select name="category" required>
       <option value="Food">Food</option>
@@ -99,8 +102,8 @@
     <td><%= expenses[i].Expense_Name %></td>
     <td><%= expenses[i].Category %></td>
     <td><%= expenses[i].Amount %></td>
-    <td><a href="/edit/<%= i %>">Edit</a></td>
-    <td><a href="/delete/<%= i %>">Delete</a></td>
+    <td><a href="/edit/<%= expenses[i].id%>">Edit</a></td>
+    <td><a href="/delete/<%= expenses[i].id%>">Delete</a></td>
   </tr>
   <% amount = amount + expenses[i].Amount %>
 <% } %>
@@ -117,27 +120,19 @@
       <option value="Rent">Rent</option>
       <option value="Other">Other</option>
     </select>
-    <button type="button" onclick="filterTable()">Filter</button>
+    <form action=""></form>
+    <button type="button" onselect="filterTable()">Filter</button>
   </form>
+  <script>
+      const selectedCategory = document.getElementById("categoryFilter").value;
+      await axios.get('filter/<%= selectedCategory %>')
+  </script>
 
   <!-- Total Amount -->
   <p>Total Amount: <%= amount %></p>
 
   <script>
-    function filterTable() {
-      const selectedCategory = document.getElementById("categoryFilter").value;
-      // Implement JavaScript filtering logic and update the table based on the selected category
-    }
-
-    // function calculateTotalAmount(expenses) {
-    //   // Implement JavaScript logic to calculate the total amount
-    //   let amount=0
-    //   for (let i = 0; i < expenses.length; i++) { 
-    //    amount=amount+ expenses[i].amount
-    // } 
-    // return amount;
-    // }
-
+  
  
   </script>
 </body>

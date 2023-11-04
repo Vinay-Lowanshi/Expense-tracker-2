@@ -6,18 +6,18 @@ const login=async(req,res)=>{
             email:req.body.email
         }
     })
-
         if(data)
         {
-            bcrypt.compare(req.body.password,data.password,(err,resp)=>{
+           bcrypt.compare(req.body.password,data.password,async(err,resp)=>{
                 if(resp)
                 // if(req.body.password==data.password)
                 {
-                   const userexpense=expenseSchema.findAll({
+                   const userexpense=  await expenseSchema.findAll({
                     where:{
                         UserId:data.id
                     }
                    })
+                   console.log(userexpense)
                    res.render('userpage',{username:data, expenses:userexpense})
                 }
                 else{
